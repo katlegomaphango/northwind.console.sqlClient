@@ -14,4 +14,19 @@ internal class Program
 
         Console.ForegroundColor = prevColor;
     }
+
+    static void Connection_InfoMessage(object sender, SqlInfoMessageEventArgs e)
+    {
+        ConsoleColor prevColor = Console.ForegroundColor;
+        Console.ForegroundColor= ConsoleColor.DarkBlue;
+
+        Console.WriteLine($"Info: {e.Message}");
+
+        foreach (var error in e.Errors)
+        {
+            Console.WriteLine($"    Error: {error}");
+        }
+
+        Console.ForegroundColor = prevColor;
+    }
 }
