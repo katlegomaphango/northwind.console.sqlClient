@@ -106,6 +106,18 @@ SqlCommand cmd = connection.CreateCommand();
 cmd.CommandType = CommandType.Text;
 cmd.CommandText = "SELECT ProductId, ProductName, UnitPrice FROM Products";
 
+SqlDataReader reader = cmd.ExecuteReader();
 
+WriteLine("----------------------------------------------------------");
+WriteLine("| {0,5} | {1,-35} | {2,8} |", "Id", "Name", "Price");
+WriteLine("----------------------------------------------------------");
+
+while (reader.Read())
+{
+    WriteLine("| {0,5} | {1,-35} | {2,8:C} |",
+        reader.GetInt32("ProductId"),
+        reader.GetString("ProductName"),
+        reader.GetDecimal("UnitPrice"));
+}
 
 connection.Close();
