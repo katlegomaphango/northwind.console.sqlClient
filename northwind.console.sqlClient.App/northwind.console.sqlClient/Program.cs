@@ -101,10 +101,21 @@ catch (SqlException ex)
 
 //Executing queries and working with data readers using ADO.NET
 
+//filter by unit price
+Write("Enter a unit price ");
+string? priceText = ReadLine();
+
+if (!decimal.TryParse(priceText, out decimal price))
+{
+    WriteLine("You must enter a valid price...");
+    return;
+}
+
 SqlCommand cmd = connection.CreateCommand();
 
 cmd.CommandType = CommandType.Text;
-cmd.CommandText = "SELECT ProductId, ProductName, UnitPrice FROM Products";
+cmd.CommandText = "SELECT ProductId, ProductName, UnitPrice FROM Products" + " WHERE UnitPrice > @price";
+cmd.Parameters.AddWithValue("price", price);
 
 SqlDataReader reader = cmd.ExecuteReader();
 
