@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 
 SqlConnectionStringBuilder builder = new();
 
@@ -26,12 +27,49 @@ if (key is ConsoleKey.D1 or ConsoleKey.NumPad1)
 else if (key is ConsoleKey.D2 or ConsoleKey.NumPad2)
 {
     builder.DataSource = "tcp:apps-services-net7.database.windows.net,1433";
-} else if (key is ConsoleKey.D3 or ConsoleKey.NumPad3)
+} 
+else if (key is ConsoleKey.D3 or ConsoleKey.NumPad3)
 {
     builder.DataSource = "tcp:127.0.0.1,1433"; // Azure SQL Edge
 }
 else
 {
     Console.WriteLine("No data source selected.");
+    return;
+}
+
+Console.WriteLine("Authenticating using: ");
+Console.WriteLine("\t1. - Windows Integrated Security");
+Console.WriteLine("\t2. - SQL Login, eg sa");
+Console.WriteLine();
+Console.Write("\tPress a key: ");
+
+key = Console.ReadKey().Key;
+Console.WriteLine();
+Console.WriteLine();
+
+if (key is ConsoleKey.D1 or ConsoleKey.NumPad1)
+{
+    builder.IntegratedSecurity = true;
+}
+else if (key is ConsoleKey.D2 or ConsoleKey.NumPad2)
+{
+    builder.UserID = "sa";
+
+    Console.Write("Enter your password: ");
+    string? password = Console.ReadLine();
+
+    if(string.IsNullOrEmpty(password))
+    {
+        Console.WriteLine("Password cannot be empy.");
+        return;
+    }
+
+    builder.Password = password;
+    builder.PersistSecurityInfo = true;
+}
+else
+{
+    Console.WriteLine("No authentication is selected.");
     return;
 }
