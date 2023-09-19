@@ -120,4 +120,7 @@ while (reader.Read())
         reader.GetDecimal("UnitPrice"));
 }
 
+WriteLine("----------------------------------------------------------");
+reader.Close();
+
 connection.Close();
