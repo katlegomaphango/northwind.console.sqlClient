@@ -19,4 +19,19 @@ ConsoleKey key = Console.ReadKey().Key;
 Console.WriteLine();
 Console.WriteLine();
 
-
+if (key is ConsoleKey.D1 or ConsoleKey.NumPad1)
+{
+    builder.DataSource = ".";
+}
+else if (key is ConsoleKey.D2 or ConsoleKey.NumPad2)
+{
+    builder.DataSource = "tcp:apps-services-net7.database.windows.net,1433";
+} else if (key is ConsoleKey.D3 or ConsoleKey.NumPad3)
+{
+    builder.DataSource = "tcp:127.0.0.1,1433"; // Azure SQL Edge
+}
+else
+{
+    Console.WriteLine("No data source selected.");
+    return;
+}
