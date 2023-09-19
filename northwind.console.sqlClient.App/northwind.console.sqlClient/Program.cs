@@ -99,4 +99,13 @@ catch (SqlException ex)
     return;
 }
 
+//Executing queries and working with data readers using ADO.NET
+
+SqlCommand cmd = connection.CreateCommand();
+
+cmd.CommandType = CommandType.Text;
+cmd.CommandText = "SELECT ProductId, ProductName, UnitPrice FROM Products";
+
+
+
 connection.Close();
