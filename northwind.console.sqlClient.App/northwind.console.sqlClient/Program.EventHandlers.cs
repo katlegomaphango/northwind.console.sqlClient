@@ -1,9 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace northwind.console.sqlClient;
-
-internal class Program
+partial class Program
 {
     static void Connection_StateChange(Object sender, StateChangeEventArgs e)
     {
@@ -17,10 +15,10 @@ internal class Program
 
     static void Connection_InfoMessage(object sender, SqlInfoMessageEventArgs e)
     {
-        ConsoleColor prevColor = Console.ForegroundColor;
-        Console.ForegroundColor= ConsoleColor.DarkBlue;
+        ConsoleColor prevColor = ForegroundColor;
+        ForegroundColor= ConsoleColor.DarkBlue;
 
-        Console.WriteLine($"Info: {e.Message}");
+        WriteLine($"Info: {e.Message}");
 
         foreach (var error in e.Errors)
         {

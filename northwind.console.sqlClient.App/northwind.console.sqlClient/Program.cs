@@ -1,13 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
+using System.Data;
 
-SqlConnectionStringBuilder builder = new();
-
-builder.InitialCatalog = "northWind";
-builder.MultipleActiveResultSets = true;
-builder.Encrypt = true;
-builder.TrustServerCertificate = true;
-builder.ConnectTimeout = 10;
+SqlConnectionStringBuilder builder = new()
+{
+    InitialCatalog = "northWind",
+    MultipleActiveResultSets = true,
+    Encrypt = true,
+    TrustServerCertificate = true,
+    ConnectTimeout = 10
+};
 
 Console.WriteLine("Connect to: ");
 Console.WriteLine("\t1. - SQL Server on local machine");
@@ -73,3 +74,29 @@ else
     Console.WriteLine("No authentication is selected.");
     return;
 }
+
+SqlConnection connection = new(builder.ConnectionString);
+
+Console.WriteLine(connection.ConnectionString);
+Console.WriteLine();
+
+connection.StateChange += Connection_StateChange;
+connection.InfoMessage += Connection_InfoMessage;
+
+try
+{
+    WriteLine("Opening connection. Please wait up to {0} seconds...", builder.ConnectTimeout);
+    WriteLine();
+    connection.Open();
+
+    WriteLine($"SQL Server version: {connection.ServerVersion}");
+
+    connection.StatisticsEnabled = true;
+}
+catch (SqlException ex)
+{
+    WriteLine($"SQL Exception: {ex.Message}");
+    return;
+}
+
+connection.Close();

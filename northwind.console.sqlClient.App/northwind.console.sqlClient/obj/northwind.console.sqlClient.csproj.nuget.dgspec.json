@@ -48,11 +48,7 @@
           "dependencies": {
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.1.1, )"
-            },
-            "System.Console": {
-              "target": "Package",
-              "version": "[4.3.1, )"
+              "version": "[5.1.0, )"
             }
           },
           "imports": [
